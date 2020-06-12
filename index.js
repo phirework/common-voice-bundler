@@ -21,10 +21,8 @@ const { name: OUT_BUCKET_NAME } = config.get('outBucket');
 let localeDirs = [];
 
 const { db, clipBucket, bundlerBucket } = require('./init').initialize();
-
 const { processAndDownloadClips } = require('./getClips');
 const { uploadDataset } = require('./getClips');
-
 
 const _countBuckets = async () => {
   const query = `In a separate shell, run the following command:
@@ -56,42 +54,6 @@ When that has completed, return to this shell and type 'corpora-complete' and hi
   }
   return buckets;
 };
-
-// const _archiveAndUpload = () =>  uploadDataset(RELEASE_NAME, bundlerBucket)
-
-  // localeDirs.reduce((promise, locale) => {
-  //   return promise.then(sizes => {
-  //     const stream = new PassThrough();
-  //     const archiveName = `${RELEASE_NAME}/${locale}.tar.gz`;
-  //     console.log('archiving & uploading', archiveName);
-  //     const managedUpload = outBucket.upload({
-  //       Body: stream,
-  //       Bucket: OUT_BUCKET_NAME,
-  //       Key: archiveName,
-  //       ACL: 'public-read'
-  //     });
-  //     logProgress(managedUpload);
-
-  //     const localeDir = path.join(OUT_DIR, locale);
-  //     tar
-  //       .c({ gzip: true, cwd: localeDir }, fs.readdirSync(localeDir))
-  //       .pipe(stream);
-
-  //     return managedUpload
-  //       .promise()
-  //       .then(() =>
-  //         outBucket
-  //           .headObject({ Bucket: OUT_BUCKET_NAME, Key: archiveName })
-  //           .promise()
-  //       )
-  //       .then(({ ContentLength }) => {
-  //         console.log('');
-  //         sizes[locale] = { size: ContentLength };
-  //         return sizes;
-  //       })
-  //       .catch(err => console.error(err));
-  //   });
-  // }, Promise.resolve({}));
 
 const calculateAggregateStats = stats => {
   let totalDuration = 0;
@@ -153,7 +115,7 @@ const run = () => {
 
       return Promise.all([
         stats,
-        sumDurations(),
+        sumDurations(localeDirs),
         countBuckets().then(async bucketStats =>
           merge(
             bucketStats,
