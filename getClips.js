@@ -15,7 +15,7 @@ const TSV_OPTIONS = {
   quote: false
 };
 
-const QUERY_FILE = config.get('queryFile');
+const QUERY_FILE = path.join(__dirname, 'queries', config.get('queryFile'));
 const OUT_DIR = config.get('localOutDir');
 const TSV_PATH = path.join(OUT_DIR, 'clips.tsv');
 
