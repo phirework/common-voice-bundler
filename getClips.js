@@ -23,7 +23,6 @@ const processAndDownloadClips = (db, clipBucket) => {
   db.connect();
 
   return new Promise(resolve => {
-    resolve();
     let activeDownloads = 0;
     let rowIndex = 0;
     let clipSavedIndex = 0;
