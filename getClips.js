@@ -20,6 +20,8 @@ const OUT_DIR = config.get('localOutDir');
 const TSV_PATH = path.join(OUT_DIR, 'clips.tsv');
 
 const processAndDownloadClips = (db, clipBucket) => {
+  db.connect();
+
   return new Promise(resolve => {
     resolve();
     let activeDownloads = 0;

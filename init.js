@@ -30,7 +30,7 @@ function connectToDb() {
       password: process.env.MYSQL_PASS || password,
       database: process.env.MYSQL_DB || database,
     });
-    db.connect();
+
     return db;
   } catch (e) {
     throw new Error(
